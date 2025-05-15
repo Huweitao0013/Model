@@ -104,7 +104,7 @@ function error = multi_objective(params, actual_values, currents)
             dRLi_dt = zeros(1, 10);
             for n = 1:10
                 for m = 1:10
-                    dRLi_dt(m) = (-DLi * gradCLi(m) - 96485.33 / (8.314 * 298) * DLi * CLi(m) * gradfL(m)) / 0.000025 / 0.5;
+                    dRLi_dt(m) = (-DLi * (0.5 .^ 1.5) * gradCLi(m) - 96485.33 / (8.314 * 298) * DLi * (0.5 .^ 1.5) * CLi(m) * gradfL(m)) / 0.000025 / 0.5;
                 end
                 if n == 1
                     dCLi_dt(n) = (-dWESC_dt(n) - dRLi_dt(n));
@@ -117,7 +117,7 @@ function error = multi_objective(params, actual_values, currents)
             dRcl_dt = zeros(1, 10);
             for n = 1:10
                 for m = 1:10
-                    dRcl_dt(m) = (-Dcl * gradCcl(m) - 96485.33 / (8.314 * 298) * Dcl * Ccl(m) * -gradfL(m)) / 0.000025 / 0.5;
+                    dRcl_dt(m) = (-Dcl * (0.5 .^ 1.5) * gradCcl(m) - 96485.33 / (8.314 * 298) * Dcl * (0.5 .^ 1.5) * Ccl(m) * -gradfL(m)) / 0.000025 / 0.5;
                 end
                 if n == 1
                     dCcl_dt(n) = (- dRcl_dt(n));
@@ -143,7 +143,7 @@ function error = multi_objective(params, actual_values, currents)
 end
 
 % Initial guess values
-initial_guess = [0.0182, 1.9538e-12, 7.6080e-11, 25000, 1000, 50000];
+initial_guess = [0.022, 4.6813e-12, 4.7394e-11, 2000, 20000, 40000];
 
 % Invoke the optimizer by passing parameters through an anonymous function
 optimized_params = fminsearch(@(params) multi_objective(params, actual_values, currents), initial_guess);
