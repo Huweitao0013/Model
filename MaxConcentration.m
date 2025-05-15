@@ -1,8 +1,8 @@
 % Initialize parameters
-S = 0.02;
+S = 0.0253;
 t_max = 4954;
-DLi = 1.8783e-12;
-Dcl = 9.5447e-11;
+DLi = 6.3020e-12;
+Dcl = 6.0073e-11;
 time_step = 1;
 k = 1e-11;
 
