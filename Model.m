@@ -1,15 +1,15 @@
 % Initialize parameters
-S = 0.02;
+S = 0.0253;
 CLi = 100 * ones(1, 10);
 Ccl = 100 * ones(1, 10);
 WESC = 0.8 * 23684 * ones(1, 10);
-t_max = 38087;
-DLi = 1.8783e-12;
-Dcl = 9.5447e-11;
+t_max = 6000;
+DLi = 6.3020e-12;
+Dcl = 6.0073e-11;
 time_step = 1;
 u = 0 * ones(1, 10);
 k = 1e-11;
-I = 6;
+I = 40;
 
 % Introduce logic mask to record fixed WESC
 fixed_WESC = false(1, 10);
@@ -93,7 +93,7 @@ for t = 1:1:t_max
     dRLi_dt = zeros(1, 10);
     for n = 1:10
         for m = 1:10
-            dRLi_dt(m) = (-DLi * gradCLi(m) - 96485.33 / (8.314 * 298) * DLi * CLi(m) * gradfL(m)) / 0.000025 / 0.5;
+            dRLi_dt(m) = (-DLi * (0.5 .^ 1.5) * gradCLi(m) - 96485.33 / (8.314 * 298) * DLi * (0.5 .^ 1.5) * CLi(m) * gradfL(m)) / 0.000025 / 0.5;
         end
         if fixed_WESC(n)
             dWESC_dt(n) = 0; % Focus dWESC_dt as 0
@@ -109,7 +109,7 @@ for t = 1:1:t_max
     dRcl_dt = zeros(1, 10);
     for n = 1:10
         for m = 1:10
-            dRcl_dt(m) = (-Dcl * gradCcl(m) - 96485.33 / (8.314 * 298) * Dcl * Ccl(m) * -gradfL(m)) / 0.000025 / 0.5;
+            dRcl_dt(m) = (-Dcl * (0.5 .^ 1.5) * gradCcl(m) - 96485.33 / (8.314 * 298) * Dcl * (0.5 .^ 1.5) * Ccl(m) * -gradfL(m)) / 0.000025 / 0.5;
         end
         if n == 1
             dCcl_dt(n) = (-dRcl_dt(n));
