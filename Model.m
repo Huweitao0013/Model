@@ -1,11 +1,11 @@
 % Initialize parameters
-S = 0.0253;
+S = 0.0309;
 CLi = 100 * ones(1, 10);
 Ccl = 100 * ones(1, 10);
 WESC = 0.8 * 23684 * ones(1, 10);
-t_max = 6000;
-DLi = 6.3020e-12;
-Dcl = 6.0073e-11;
+t_max = 3604;
+DLi = 3.9713e-12;
+Dcl = 2.9996e-10;
 time_step = 1;
 u = 0 * ones(1, 10);
 k = 1e-11;
