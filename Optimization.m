@@ -135,18 +135,22 @@ function error = multi_objective(params, actual_values, currents)
          % Error calculation (with corrected indexing)
         actual = actual_values(idx, :); % Actual values
         predicted = WESC + CLi;    % Simulated values
-        errors(idx) = max(abs(predicted - actual));
+        errors(idx) = sum((predicted - actual).^2);
     end
 
     % Return the maximum value of all errors to ensure local minimization
     error = sum(errors);
 end
 
-% Initial guess values
-initial_guess = [0.022, 4.6813e-12, 4.7394e-11, 2000, 20000, 40000];
+% Set bounds for each parameter
+lb = [0.01, 1e-12, 1e-11, 2000, 15000, 30000];   % Lower bounds
+ub = [0.04, 1e-11, 3e-10, 4000, 25000, 40000];    % Upper bounds0
 
-% Invoke the optimizer by passing parameters through an anonymous function
-optimized_params = fminsearch(@(params) multi_objective(params, actual_values, currents), initial_guess);
+% Initial guess (ensure it lies within the bounds)
+initial_guess = [0.03, 5e-12, 5e-11, 3500, 20000, 33000];
+
+% Use fminsearchbnd to perform the optimization with bounds
+optimized_params = fminsearchbnd(@(params) multi_objective(params, actual_values, currents), initial_guess, lb, ub);
 
 % Output the optimization results
 fprintf('S: %.4f\n', optimized_params(1));
