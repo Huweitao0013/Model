@@ -1,13 +1,13 @@
 % Initialize parameters
-S = 0.0253;
-t_max = 4954;
-DLi = 6.3020e-12;
-Dcl = 6.0073e-11;
+S = 0.0309;
+t_max = 10000;
+DLi = 3.9713e-12;
+Dcl = 2.9996e-10;
 time_step = 1;
 k = 1e-11;
 
 % Define the current range
-current_values = [40, 35, 30, 25, 20, 15, 10, 9, 6];
+current_values = [40, 9, 6];
 results = zeros(length(current_values), 3); % Storage (I, t_max, max(WESC + CLi))
 
 for idx = 1:length(current_values)
